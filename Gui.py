@@ -52,6 +52,23 @@ Builder.load_string("""
                         center_x: self.parent.center_x
                         center_y: self.parent.center_y
                         allow_stretch: True
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'top' 
+                padding: root.width/50, root.height/75
+                canvas:
+                    Color:
+                        rgba: 1, 1, 1, .6
+                    Rectangle:
+                        pos: root.width/2-root.width/5, root.height-root.height/10
+                        size: root.width/2.5, root.height/10
+                        source: '../../Desktop/rams.png'  
+                Label:
+                    font_size: 46
+                    size_hint: 0.3, 0.075
+                    color: 1,1,1,1  
+                    markup: True
+                    text: '[font=FFF_Tusj]RamsRewards®'             
 """)
 
 class ActivityList(BoxLayout):
@@ -62,7 +79,7 @@ class RamsRewardsApp(App):
 
     def build(self):
         Window.size = (300, 570)
-        Window.clearcolor = (200, 200, 200, 1)
+        Window.clearcolor = (1, 1, 1, .2)
         return ActivityList()
 
 sample_app = RamsRewardsApp()
