@@ -1,4 +1,6 @@
 import kivy
+from kivy.properties import ObjectProperty
+
 import Activity
 
 kivy.require('1.9.0')
@@ -13,8 +15,10 @@ from kivy.uix.button import Button
 # You can create your kv code in the Python file
 Builder.load_string("""
 <ActivityList>
+    box: Box
     orientation: 'vertical'
     AnchorLayout:
+        size_hint: 1, 0.1
         AnchorLayout:
             anchor_x: 'left'
             anchor_y: 'top' 
@@ -23,13 +27,13 @@ Builder.load_string("""
                     rgba: 51/255, 153/255, 51/255, 1
                 Rectangle:
                     pos: 0, root.height-root.height/10
-                    size: root.width, root.height/10  
+                    size: root.width, root.height
             AnchorLayout:
                 anchor_x: 'left'
                 anchor_y: 'top' 
                 padding: root.width/50, root.height/75
                 Button:
-                    size_hint: 0.15, 0.075
+                    size_hint: 0.15, 1
                     background_color: 1,1,1,1
                     Image:
                         width: root.width/10
@@ -43,7 +47,7 @@ Builder.load_string("""
                 anchor_y: 'top' 
                 padding: root.width/50, root.height/75
                 Button:
-                    size_hint: 0.15, 0.075
+                    size_hint: 0.15, 1
                     background_color: 1,1,1,1
                     Image:
                         width: root.width/10
@@ -65,10 +69,18 @@ Builder.load_string("""
                         source: '../../Desktop/rams.png'  
                 Label:
                     font_size: 46
-                    size_hint: 0.3, 0.075
+                    size_hint: 0.3, 1
                     color: 1,1,1,1  
                     markup: True
-                    text: '[font=FFF_Tusj]RamsRewards®'             
+                    text: '[font=FFF_Tusj]RamsRewards®'    
+    ScrollView:
+        GridLayout:
+            row_default_height: '20dp'
+            padding: 20, 5
+            cols: 1
+            rows: 100
+            id: Box
+
 """)
 
 class ActivityList(BoxLayout):
@@ -80,7 +92,10 @@ class RamsRewardsApp(App):
     def build(self):
         Window.size = (300, 570)
         Window.clearcolor = (1, 1, 1, .2)
-        return ActivityList()
+        g = ActivityList()
+        for i in range(100):
+           g.box.add_widget(Button())
+        return g
 
 sample_app = RamsRewardsApp()
 sample_app.run()
