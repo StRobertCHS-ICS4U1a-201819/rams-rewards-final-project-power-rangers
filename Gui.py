@@ -10,6 +10,7 @@ from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.button import Button
 
+
 # You can create your kv code in the Python file
 Builder.load_string("""
 <ActivityList>
