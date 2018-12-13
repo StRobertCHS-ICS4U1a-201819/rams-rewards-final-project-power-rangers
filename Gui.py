@@ -68,7 +68,7 @@ Builder.load_string("""
                     size: root.width/2.5, root.height/10
                     source: 'images/rams.png'  
             Label:
-                font_size: 46
+                font_size: root.width/12.5
                 size_hint: 0.3, 1
                 color: 1,1,1,1  
                 markup: True
