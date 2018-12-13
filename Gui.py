@@ -139,21 +139,6 @@ class RamsRewardsApp(App):
         Window.size = (300, 570)
         Window.clearcolor = (1, 1, 1, .2)
 
-
-        activities = [Activity]
-        sm = ScreenManager()
-        g = ActivityList()
-
-
-        for i in range(4):
-            screen = Screen(name='Title %d' % i)
-            sm.add_widget(screen)
-
-
-        for i in range(10):
-
-            g.box.add_widget(Button())
-
         ball = Activity("ball", 10)
         soccer = Activity("soccer", 20)
         choir = Activity("choir", 5)
