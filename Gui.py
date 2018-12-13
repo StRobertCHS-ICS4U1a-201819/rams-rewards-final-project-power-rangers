@@ -15,6 +15,7 @@ from kivy.uix.button import Button
 # You can create your kv code in the Python file
 Builder.load_string("""
 <ActivityList>
+    padding: 10
     box: Box
     orientation: 'vertical'
     AnchorLayout:
@@ -27,7 +28,7 @@ Builder.load_string("""
                     rgba: 51/255, 153/255, 51/255, 1
                 Rectangle:
                     pos: 0, root.height-root.height/10
-                    size: root.width, root.height
+                    size: root.width, root.height-20
             AnchorLayout:
                 anchor_x: 'left'
                 anchor_y: 'top' 
@@ -38,7 +39,7 @@ Builder.load_string("""
                     Image:
                         width: root.width/10
                         height: root.height/20
-                        source: '../../Desktop/three-bars.png'
+                        source: 'images/three-bars.png'
                         center_x: self.parent.center_x
                         center_y: self.parent.center_y
                         allow_stretch: True
@@ -52,7 +53,7 @@ Builder.load_string("""
                     Image:
                         width: root.width/10
                         height: root.height/20
-                        source: '../../Desktop/camera_icon.png'
+                        source: 'images/camera_icon.png'
                         center_x: self.parent.center_x
                         center_y: self.parent.center_y
                         allow_stretch: True
@@ -66,7 +67,7 @@ Builder.load_string("""
                     Rectangle:
                         pos: root.width/2-root.width/5, root.height-root.height/10
                         size: root.width/2.5, root.height/10
-                        source: '../../Desktop/rams.png'  
+                        source: 'images/rams.png'  
                 Label:
                     font_size: 46
                     size_hint: 0.3, 1
@@ -75,10 +76,11 @@ Builder.load_string("""
                     text: '[font=FFF_Tusj]RamsRewards®'    
     ScrollView:
         GridLayout:
-            row_default_height: '20dp'
-            padding: 20, 5
-            cols: 1
-            rows: 100
+            orientation: "vertical"
+            size_hint_y: None
+            height: 10
+            row_default_height: 60
+            cols:1
             id: Box
 
 """)
