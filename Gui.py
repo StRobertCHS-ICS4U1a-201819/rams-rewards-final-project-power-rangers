@@ -3,9 +3,10 @@ from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from Activity import *
-
+from Student import *
 kivy.require('1.9.0')
 
+from kivy.effects.dampedscroll import DampedScrollEffect
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
@@ -23,6 +24,7 @@ Builder.load_string("""
     Screen:
         name: 'menu'
         BoxLayout:
+            padding:5
             orientation: 'vertical'
             AnchorLayout:
                 size_hint: 1, 0.1
@@ -86,7 +88,7 @@ Builder.load_string("""
                 pos: 0, 10
                 ScrollView:
                     GridLayout:
-                        padding: 5
+                        padding_bottom: 5
                         spacing: 5
                         orientation: "vertical"
                         height: self.minimum_height
@@ -108,9 +110,10 @@ Builder.load_string("""
                         size: root.width, root.height/10
                 size_hint: 1, 0.1
                 BoxLayout:
+                    id: ActivityName
+                    orientation: 'horizontal'
                     padding: 10
                     spacing: 5
-                    id: ActivityName
             AnchorLayout:  
                 size_hint: 1, 0.9
                 pos: 0, 10
@@ -122,9 +125,8 @@ Builder.load_string("""
                         height: self.minimum_height
                         size_hint_y: None
                         row_default_height: 125
-                        cols:1
+                        cols:2
                         id: Box2
-        
 """)
 
 class Screens(ScreenManager):
@@ -151,19 +153,57 @@ class RamsRewardsApp(App):
         bogeyBreak = Activity("took a bogey break", 80)
         activities = [ball, soccer, choir, defazingYutes, gurksingHeadTops, singingOCanada, ramofthemonth, helpingAMandem, lowingAManATump, bogeyBreak]
 
+        student1 = Student("Timofey", "Hartanovich", 1, 12)
+        student2 = Student("Jorge", "Sumi", 2, 12)
+        student3 = Student("Jermaine", "Cole", 3, 12)
+        student4 = Student("Marshal", "Matthers", 4, 12)
+        student5 = Student("Killy", "", 5, 12)
+        student6 = Student("Post", "Malone", 6, 12)
+        student7 = Student("Trey", "Songz", 7, 12)
+        student8 = Student("Kanye", "West", 8, 12)
+        students = [student1, student2, student3, student4, student5, student6, student7, student8]
+
+        currentActivity = ball
+
         def callback(instance):
+            global currentActivity
+            sm.box2.clear_widgets()
             sm.current = 'Screen2'
             text = instance.text
             for i in activities:
                 if i.get_activity() == instance.text:
                     text2 = str(i.get_points()) + " points"
+                    currentActivity = i
                     break
             label = Label(text=text, font_name='images/FFF_Tusj.ttf', font_size=sm.width/20, size_hint=(0.75,1))
             label2 = Label(text=text2, font_name='images/FFF_Tusj.ttf', font_size=sm.width/30, size_hint= (0.25, 1))
             sm.activityName.add_widget(label)
             sm.activityName.add_widget(label2)
+            print(currentActivity.get_activity())
+
+            for i in students:
+                text = 'Points: ' + str(i.get_points())
+                label = Label(text=text, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 30, size_hint=(0.25, 1),
+                              color=(0, 0, 0, 1))
+                button = Button()
+                button.text = i.get_name()
+                button.background_normal = ''
+                button.background_color = .15, .7, .2, .7
+                button.size_hint = 0.75, 1
+                button.bind(on_press=callback2)
+                sm.box2.add_widget(button)
+                sm.box2.add_widget(label)
 
         def callback2(instance):
+            global currentActivity
+            print (currentActivity.get_activity())
+            count = 0
+            for i in students:
+                if i.get_name() == instance.text:
+                    students[count].set_points(students[count].get_points()+currentActivity.get_points())
+                    print(students[count].get_points())
+                    break
+                count += 1
             sm.activityName.clear_widgets()
             sm.current = 'menu'
 
@@ -175,14 +215,6 @@ class RamsRewardsApp(App):
             button.background_color = .15, .7, .2, .7
             button.bind(on_press=callback)
             sm.box.add_widget(button)
-
-        for i in range(10):
-            button = Button()
-            button.text = 'Student ' + str(i+1)
-            button.background_normal = ''
-            button.background_color = .15, .7, .2, .7
-            button.bind(on_press=callback2)
-            sm.box2.add_widget(button)
         return sm
 
 sample_app = RamsRewardsApp()
