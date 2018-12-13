@@ -72,7 +72,8 @@ Builder.load_string("""
                 size_hint: 0.3, 1
                 color: 1,1,1,1  
                 markup: True
-                text: '[font=FFF_Tusj]RamsRewards®'  
+                font_name: 'images/FFF_Tusj.ttf'
+                text: 'RamsRewards®'  
     AnchorLayout:  
         size_hint: 1, 0.9
         pos: 0, 10
@@ -97,9 +98,17 @@ class RamsRewardsApp(App):
     def build(self):
         Window.size = (300, 570)
         Window.clearcolor = (1, 1, 1, .2)
+
+        #activities = [Activity]
+        #ball = Activity("ball", 10, (1,0,0,1))
+
+        #activities.append(ball)
         g = ActivityList()
-        for i in range(100):
-           g.box.add_widget(Button())
+        for i in range(10):
+            #text = activities[i].get_activity()
+            #points = activities.get_points()
+            #color = activities.get_color()
+            g.box.add_widget(Button())
         return g
 
 sample_app = RamsRewardsApp()
