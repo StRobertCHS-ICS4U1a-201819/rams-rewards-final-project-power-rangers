@@ -12,6 +12,8 @@ from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.button import Button
 
+
+
 # You can create your kv code in the Python file
 Builder.load_string("""
 <ActivityList>
@@ -73,7 +75,7 @@ Builder.load_string("""
                     size_hint: 0.3, 1
                     color: 1,1,1,1  
                     markup: True
-                    text: '[font=FFF_Tusj]RamsRewards®'    
+                    text: '[font=FFF_Tusj.ttf]RamsRewards®'    
     ScrollView:
         GridLayout:
             orientation: "vertical"
