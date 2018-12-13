@@ -12,6 +12,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.button import Button
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 # You can create your kv code in the Python file
 Builder.load_string("""
@@ -137,6 +138,21 @@ class RamsRewardsApp(App):
 
         Window.size = (300, 570)
         Window.clearcolor = (1, 1, 1, .2)
+
+
+        activities = [Activity]
+        sm = ScreenManager()
+        g = ActivityList()
+
+
+        for i in range(4):
+            screen = Screen(name='Title %d' % i)
+            sm.add_widget(screen)
+
+
+        for i in range(10):
+
+            g.box.add_widget(Button())
 
         ball = Activity("ball", 10)
         soccer = Activity("soccer", 20)
