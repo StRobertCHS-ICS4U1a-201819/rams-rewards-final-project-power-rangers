@@ -12,11 +12,14 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.button import Button
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 # You can create your kv code in the Python file
 Builder.load_string("""
 <Screens>
     box: Box
+    box2: Box2
+    activityName: ActivityName
     Screen:
         name: 'menu'
         BoxLayout:
@@ -84,6 +87,7 @@ Builder.load_string("""
                 ScrollView:
                     GridLayout:
                         padding: 5
+                        spacing: 5
                         orientation: "vertical"
                         height: self.minimum_height
                         size_hint_y: None
@@ -93,8 +97,33 @@ Builder.load_string("""
 
     Screen:
         name: 'Screen2'
-
-        
+        BoxLayout:
+            orientation: 'vertical'
+            AnchorLayout:
+                canvas:
+                    Color:
+                        rgba: 51/255, 153/255, 51/255, 1
+                    Rectangle:
+                        pos: 0, root.height - root.height/10
+                        size: root.width, root.height/10
+                size_hint: 1, 0.1
+                BoxLayout:
+                    padding: 10
+                    spacing: 5
+                    id: ActivityName
+            AnchorLayout:  
+                size_hint: 1, 0.9
+                pos: 0, 10
+                ScrollView:
+                    GridLayout:
+                        padding: 5
+                        spacing: 5
+                        orientation: "vertical"
+                        height: self.minimum_height
+                        size_hint_y: None
+                        row_default_height: 125
+                        cols:1
+                        id: Box2
 
 """)
 
@@ -106,33 +135,57 @@ class Screens(ScreenManager):
 class RamsRewardsApp(App):
 
     def build(self):
+
         sm = Screens()
 
         Window.size = (300, 570)
         Window.clearcolor = (1, 1, 1, .2)
 
         ball = Activity("ball", 10)
-        soccer = Activity("soccer", 10)
-        choir = Activity("choir", 10)
-        defazingYutes = Activity("defazing yutes", 10)
-        gurksingHeadTops = Activity("gurksing headtops", 10)
-        singingOCanada = Activity("singing o canada", 10)
+        soccer = Activity("soccer", 20)
+        choir = Activity("choir", 5)
+        defazingYutes = Activity("defazing yutes", 100)
+        gurksingHeadTops = Activity("gurksing headtops", 50)
+        singingOCanada = Activity("singing o canada", 200)
         ramofthemonth = Activity("ram of the month", 1000)
-        helpingAMandem = Activity("helping a mandem", 10)
-        lowingAManATump = Activity("Lowed a man a tump", 10)
-        bogeyBreak = Activity("took a bogey break", 10)
+        helpingAMandem = Activity("helping a mandem", 70)
+        lowingAManATump = Activity("Lowed a man a tump", 90)
+        bogeyBreak = Activity("took a bogey break", 80)
         activities = [ball, soccer, choir, defazingYutes, gurksingHeadTops, singingOCanada, ramofthemonth,
                       helpingAMandem, lowingAManATump, bogeyBreak]
 
         def callback(instance):
             sm.current = 'Screen2'
+            text = instance.text
+            for i in activities:
+                if i.get_activity() == instance.text:
+                    text2 = str(i.get_points()) + " points"
+                    break
+            label = Label(text=text, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 20, size_hint=(0.75, 1))
+            label2 = Label(text=text2, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 30, size_hint=(0.25, 1))
+            sm.activityName.add_widget(label)
+            sm.activityName.add_widget(label2)
+
+        def callback2(instance):
+            sm.activityName.clear_widgets()
+            sm.current = 'menu'
 
         for i in activities:
             text = i.get_activity()
             button = Button()
             button.text = text
+            button.background_normal = ''
+            button.background_color = .15, .7, .2, .7
             button.bind(on_press=callback)
             sm.box.add_widget(button)
+
+        for i in range(10):
+            button = Button()
+            button.text = 'Student ' + str(i + 1)
+            button.background_normal = ''
+            button.background_color = .15, .7, .2, .7
+            button.bind(on_press=callback2)
+            sm.box2.add_widget(button)
         return sm
 
 
