@@ -1,7 +1,7 @@
 import kivy
 from kivy.properties import ObjectProperty
 
-import Activity
+from Activity import *
 
 kivy.require('1.9.0')
 
@@ -86,12 +86,10 @@ Builder.load_string("""
                 row_default_height: 125
                 cols:1
                 id: Box
-
 """)
 
 class ActivityList(BoxLayout):
     pass
-
 
 class RamsRewardsApp(App):
 
@@ -99,16 +97,21 @@ class RamsRewardsApp(App):
         Window.size = (300, 570)
         Window.clearcolor = (1, 1, 1, .2)
 
-        #activities = [Activity]
-        #ball = Activity("ball", 10, (1,0,0,1))
-
-        #activities.append(ball)
+        ball = Activity("ball", 10)
+        soccer = Activity("soccer", 10)
+        choir = Activity("choir", 10)
+        defazingYutes = Activity("defazing yutes", 10)
+        gurksingHeadTops = Activity("gurksing headtops", 10)
+        singingOCanada = Activity("singing o canada", 10)
+        ramofthemonth = Activity("ram of the month", 1000)
+        helpingAMandem = Activity("helping a mandem", 10)
+        lowingAManATump = Activity("Lowed a man a tump", 10)
+        bogeyBreak = Activity("took a bogey break", 10)
+        activities = [ball, soccer, choir, defazingYutes, gurksingHeadTops, singingOCanada, ramofthemonth, helpingAMandem, lowingAManATump, bogeyBreak]
         g = ActivityList()
-        for i in range(10):
-            #text = activities[i].get_activity()
-            #points = activities.get_points()
-            #color = activities.get_color()
-            g.box.add_widget(Button())
+        for i in activities:
+            text = i.get_activity()
+            g.box.add_widget(Button(text= text))
         return g
 
 sample_app = RamsRewardsApp()
