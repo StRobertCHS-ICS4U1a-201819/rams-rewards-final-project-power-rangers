@@ -1,4 +1,4 @@
-class Activity:
+class Activity(object):
     def __init__(self, activity, points):
         self.activity = activity
         self.points = points
