@@ -96,7 +96,7 @@ Builder.load_string("""
                         row_default_height: 125
                         cols:1
                         id: Box
-                    
+
     Screen:
         name: 'Screen2'
         BoxLayout:
@@ -129,8 +129,10 @@ Builder.load_string("""
                         id: Box2
 """)
 
+
 class Screens(ScreenManager):
     pass
+
 
 class RamsRewardsApp(App):
 
@@ -151,7 +153,8 @@ class RamsRewardsApp(App):
         helpingAMandem = Activity("helping a mandem", 70)
         lowingAManATump = Activity("Lowed a man a tump", 90)
         bogeyBreak = Activity("took a bogey break", 80)
-        activities = [ball, soccer, choir, defazingYutes, gurksingHeadTops, singingOCanada, ramofthemonth, helpingAMandem, lowingAManATump, bogeyBreak]
+        activities = [ball, soccer, choir, defazingYutes, gurksingHeadTops, singingOCanada, ramofthemonth,
+                      helpingAMandem, lowingAManATump, bogeyBreak]
 
         student1 = Student("Timofey", "Hartanovich", 1, 12)
         student2 = Student("Jorge", "Sumi", 2, 12)
@@ -175,8 +178,8 @@ class RamsRewardsApp(App):
                     text2 = str(i.get_points()) + " points"
                     currentActivity = i
                     break
-            label = Label(text=text, font_name='images/FFF_Tusj.ttf', font_size=sm.width/20, size_hint=(0.75,1))
-            label2 = Label(text=text2, font_name='images/FFF_Tusj.ttf', font_size=sm.width/30, size_hint= (0.25, 1))
+            label = Label(text=text, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 20, size_hint=(0.75, 1))
+            label2 = Label(text=text2, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 30, size_hint=(0.25, 1))
             sm.activityName.add_widget(label)
             sm.activityName.add_widget(label2)
             print(currentActivity.get_activity())
@@ -216,6 +219,7 @@ class RamsRewardsApp(App):
             button.bind(on_press=callback)
             sm.box.add_widget(button)
         return sm
+
 
 sample_app = RamsRewardsApp()
 sample_app.run()
