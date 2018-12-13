@@ -6,8 +6,14 @@ class Student(object):
         self.__student_id = student_id
         self.__grade = grade
         self.__points = 0
+        self.__selected = False
 
     def get_name(self):
+        if self.__first_name == "":
+            return self.__last_name
+        elif self.__last_name == "":
+            return self.__first_name
+
         return self.__last_name + ", " + self.__first_name
 
     def get_student_id(self):
@@ -21,3 +27,9 @@ class Student(object):
 
     def set_points(self, points):
         self.__points = points
+
+    def select(self, select):
+        self.__selected = select
+
+    def isSelected(self):
+        return self.__selected

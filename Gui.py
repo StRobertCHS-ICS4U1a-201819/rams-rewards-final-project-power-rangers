@@ -6,10 +6,10 @@ from Activity import *
 from Student import *
 kivy.require('1.9.0')
 
-from kivy.effects.dampedscroll import DampedScrollEffect
+from kivy.uix.checkbox import CheckBox
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
+
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.button import Button
@@ -125,7 +125,7 @@ Builder.load_string("""
                         height: self.minimum_height
                         size_hint_y: None
                         row_default_height: 125
-                        cols:2
+                        cols:3
                         id: Box2
 """)
 
@@ -167,48 +167,98 @@ class RamsRewardsApp(App):
         students = [student1, student2, student3, student4, student5, student6, student7, student8]
 
         currentActivity = ball
+        currentStudent = student1
 
-        def callback(instance):
+        def refreshCallBack(text1):
             global currentActivity
+            global currentStudent
+            sm.activityName.clear_widgets()
             sm.box2.clear_widgets()
             sm.current = 'Screen2'
-            text = instance.text
+            text = text1
+            for i in students:
+                currentStudent = i
+                currentStudent.select(False)
             for i in activities:
-                if i.get_activity() == instance.text:
+                if i.get_activity() == text:
                     text2 = str(i.get_points()) + " points"
                     currentActivity = i
                     break
-            label = Label(text=text, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 20, size_hint=(0.75, 1))
-            label2 = Label(text=text2, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 30, size_hint=(0.25, 1))
+
+            label = Label(text=text, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 20, size_hint=(0.7, 1))
+            label2 = Label(text=text2, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 30, size_hint=(0.2, 1))
+            add_points_button = Button(text="+", font_name='images/FFF_Tusj.ttf', font_size=sm.width / 30, size_hint=(0.05, 1))
+            add_points_button.bind(on_press=on_click)
+            back_button = Button(text="<-", font_name='images/FFF_Tusj.ttf', font_size=sm.width / 25,
+                                       size_hint=(0.05, 1))
+            add_points_button.bind(on_press=on_click)
+            back_button.bind(on_press=backButtonCallBack)
+            sm.activityName.add_widget(back_button)
             sm.activityName.add_widget(label)
             sm.activityName.add_widget(label2)
+            sm.activityName.add_widget(add_points_button)
             print(currentActivity.get_activity())
 
             for i in students:
+                currentStudent = i
                 text = 'Points: ' + str(i.get_points())
-                label = Label(text=text, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 30, size_hint=(0.25, 1),
+                label = Label(text=text, font_name='images/FFF_Tusj.ttf', font_size=sm.width / 30, size_hint=(0.2, 1),
                               color=(0, 0, 0, 1))
-                button = Button()
-                button.text = i.get_name()
-                button.background_normal = ''
-                button.background_color = .15, .7, .2, .7
-                button.size_hint = 0.75, 1
-                button.bind(on_press=callback2)
-                sm.box2.add_widget(button)
+                checkbox = CheckBox(size_hint=(0.1, 1))
+                checkbox.text = i.get_name()
+                checkbox.bind(active=on_checkbox_active)
+                student_button = Button()
+                student_button.text = i.get_name()
+                student_button.background_normal = ''
+                student_button.background_color = .15, .7, .2, .7
+                student_button.size_hint = 0.7, 1
+                student_button.bind(on_press=callback2)
+                sm.box2.add_widget(student_button)
                 sm.box2.add_widget(label)
+                sm.box2.add_widget(checkbox)
+
+        def callback(instance):
+            refreshCallBack(instance.text)
+
+        def backButtonCallBack(instance):
+            sm.activityName.clear_widgets()
+            sm.current = 'menu'
+
+        def on_checkbox_active(checkbox, value):
+            global currentStudent
+            select = False
+            for i in students:
+                if i.get_name() == checkbox.text:
+                    currentStudent = i
+            if value:
+                select = True
+            currentStudent.select(select)
+            print(currentStudent.get_name(), currentStudent.isSelected())
+
+        def on_click(instance):
+            global currentStudent
+            global currentActivity
+            for i in students:
+                if i.isSelected():
+                    currentStudent = i
+                    currentStudent.set_points(i.get_points()+currentActivity.get_points())
+            refreshCallBack(currentActivity.get_activity())
+            
 
         def callback2(instance):
             global currentActivity
-            print (currentActivity.get_activity())
+            global currentStudent
             count = 0
             for i in students:
                 if i.get_name() == instance.text:
+                    currentStudent = i
                     students[count].set_points(students[count].get_points()+currentActivity.get_points())
                     print(students[count].get_points())
                     break
                 count += 1
-            sm.activityName.clear_widgets()
-            sm.current = 'menu'
+            backButtonCallBack()
+            print(currentActivity.get_activity())
+            print(currentStudent.get_name())
 
         for i in activities:
             text = i.get_activity()
