@@ -21,6 +21,7 @@ Builder.load_string("""
     box: Box
     box2: Box2
     activityName: ActivityName
+    studentInformation: StudentInformation
     Screen:
         name: 'menu'
         BoxLayout:
@@ -127,6 +128,21 @@ Builder.load_string("""
                         row_default_height: 125
                         cols:3
                         id: Box2
+    Screen:
+        name: 'StudentInfo'
+        
+        AnchorLayout:
+            canvas:
+                Color:
+                    rgba: 51/255, 153/255, 51/255, 1
+                Rectangle:
+                    pos: 0, 0
+                    size: root.width, root.height
+            BoxLayout:
+                id: StudentInformation
+                orientation: 'vertical'
+                padding: 10
+                spacing: 5                    
 """)
 
 
@@ -172,6 +188,7 @@ class RamsRewardsApp(App):
         def refreshCallBack(text1):
             global currentActivity
             global currentStudent
+            global lastScreen
             sm.activityName.clear_widgets()
             sm.box2.clear_widgets()
             sm.current = 'Screen2'
@@ -224,6 +241,10 @@ class RamsRewardsApp(App):
             sm.activityName.clear_widgets()
             sm.current = 'menu'
 
+        def backStudentButtonCallBack(instance):
+            sm.activityName.clear_widgets()
+            sm.current = 'Screen2'
+
         def on_checkbox_active(checkbox, value):
             global currentStudent
             select = False
@@ -248,15 +269,24 @@ class RamsRewardsApp(App):
         def callback2(instance):
             global currentActivity
             global currentStudent
-            count = 0
+            global lastScreen
+            sm.current = 'StudentInfo'
+            sm.studentInformation.clear_widgets()
             for i in students:
                 if i.get_name() == instance.text:
                     currentStudent = i
-                    students[count].set_points(students[count].get_points()+currentActivity.get_points())
-                    print(students[count].get_points())
                     break
-                count += 1
-            backButtonCallBack()
+            nameLabel = Label(text=currentStudent.get_name())
+            idLabel = Label(text=str(currentStudent.get_id()))
+            gradeLabel = Label(text=str(currentStudent.get_grade()))
+            pointsLabel = Label(text=str(currentStudent.get_points()))
+            button = Button(text="Back")
+            button.bind(on_press=backStudentButtonCallBack)
+            sm.studentInformation.add_widget(button)
+            sm.studentInformation.add_widget(nameLabel)
+            sm.studentInformation.add_widget(idLabel)
+            sm.studentInformation.add_widget(gradeLabel)
+            sm.studentInformation.add_widget(pointsLabel)
             print(currentActivity.get_activity())
             print(currentStudent.get_name())
 

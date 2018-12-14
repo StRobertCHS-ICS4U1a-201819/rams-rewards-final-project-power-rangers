@@ -16,7 +16,7 @@ class Student(object):
 
         return self.__last_name + ", " + self.__first_name
 
-    def get_student_id(self):
+    def get_id(self):
         return self.__student_id
 
     def get_grade(self):
