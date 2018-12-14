@@ -242,7 +242,10 @@ class RamsRewardsApp(App):
             sm.current = 'menu'
 
         def backStudentButtonCallBack(instance):
+            global currentActivity
+            text = currentActivity.get_activity()
             sm.activityName.clear_widgets()
+            refreshCallBack(text)
             sm.current = 'Screen2'
 
         def on_checkbox_active(checkbox, value):
@@ -276,10 +279,10 @@ class RamsRewardsApp(App):
                 if i.get_name() == instance.text:
                     currentStudent = i
                     break
-            nameLabel = Label(text=currentStudent.get_name())
-            idLabel = Label(text=str(currentStudent.get_id()))
-            gradeLabel = Label(text=str(currentStudent.get_grade()))
-            pointsLabel = Label(text=str(currentStudent.get_points()))
+            nameLabel = Label(text="Name: " + currentStudent.get_name())
+            idLabel = Label(text="Student ID: " + str(currentStudent.get_id()))
+            gradeLabel = Label(text="Grade: " + str(currentStudent.get_grade()))
+            pointsLabel = Label(text="Points: " + str(currentStudent.get_points()))
             button = Button(text="Back")
             button.bind(on_press=backStudentButtonCallBack)
             sm.studentInformation.add_widget(button)
