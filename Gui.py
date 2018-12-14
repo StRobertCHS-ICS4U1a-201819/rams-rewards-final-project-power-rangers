@@ -95,7 +95,7 @@ Builder.load_string("""
                         height: self.minimum_height
                         size_hint_y: None
                         row_default_height: 125
-                        cols:1
+                        cols:2
                         id: Box
 
     Screen:
@@ -295,12 +295,19 @@ class RamsRewardsApp(App):
 
         for i in activities:
             text = i.get_activity()
+            text1 = str(i.get_points())
             button = Button()
             button.text = text
+            label = Label()
+            label.text = "Points: " + text1
+            label.color = 0, 0, 0, 1
+            label.size_hint = 0.3, 1
             button.background_normal = ''
             button.background_color = .15, .7, .2, .7
+            button.size_hint = 0.7, 1
             button.bind(on_press=callback)
             sm.box.add_widget(button)
+            sm.box.add_widget(label)
         return sm
 
 
