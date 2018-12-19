@@ -5,7 +5,7 @@ class Student(object):
         self.__last_name = last_name
         self.__homeroom = homeroom
         self.__student_id = student_id
-        self.__rewards_points = 0
+        self.__rewards_points = rewards_points
 
     def set_rewards_points(self, rewards_points):
         self.__rewards_points = rewards_points
@@ -14,7 +14,7 @@ class Student(object):
         return self.__rewards_points
 
     def get_name(self):
-        return self.__first_name + self.__last_name
+        return self.__first_name + " " + self.__last_name
 
     def set_homeroom(self, homeroom):
         self.__homeroom = homeroom
@@ -24,3 +24,4 @@ class Student(object):
 
     def get_student_id(self):
         return self.__student_id
+
