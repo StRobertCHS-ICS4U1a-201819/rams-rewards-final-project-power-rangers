@@ -6,6 +6,7 @@ class Student(object):
         self.__student_id = student_id
         self.__grade = grade
         self.__points = 0
+        self.__history = []
         self.__selected = False
 
     def get_name(self):
@@ -33,3 +34,14 @@ class Student(object):
 
     def isSelected(self):
         return self.__selected
+
+    def log_event(self, activity):
+        self.__history.append(activity)
+
+    def get_history(self):
+        string = ""
+        for i in range(len(self.__history)-1, -1, -1):
+            string += str(i+1) + ". "
+            string += self.__history[i]
+            string += '\n'
+        return string

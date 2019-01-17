@@ -1,5 +1,5 @@
 import kivy
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from Activity import *
@@ -14,6 +14,9 @@ from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.scrollview import ScrollView
+
+global sm
 
 # You can create your kv code in the Python file
 Builder.load_string("""
@@ -21,11 +24,14 @@ Builder.load_string("""
     box: Box
     box2: Box2
     activityName: ActivityName
+    createActivity: CreateActivity
     studentInformation: StudentInformation
+    actNameInput: ActNameInput
+    actPointInput: ActPointInput
     Screen:
         name: 'menu'
         BoxLayout:
-            padding:5
+            padding_top:5
             orientation: 'vertical'
             AnchorLayout:
                 size_hint: 1, 0.1
@@ -45,13 +51,14 @@ Builder.load_string("""
                     Button:
                         size_hint: 0.15, 0.8
                         background_color: 1,1,1,1
+                        on_press: root.three_click()
                         Image:
                             width: root.width/10
                             height: root.height/20
                             source: 'images/three-bars.png'
                             center_x: self.parent.center_x
                             center_y: self.parent.center_y
-                            allow_stretch: True
+                            allow_stretch: True 
                 AnchorLayout:
                     padding: 10, 0
                     anchor_x: 'right'
@@ -59,6 +66,7 @@ Builder.load_string("""
                     Button:
                         size_hint: 0.15, 0.8
                         background_color: 1,1,1,1
+                        on_press: root.cam_click()
                         Image:
                             width: root.width/10
                             height: root.height/20
@@ -85,11 +93,14 @@ Builder.load_string("""
                         font_name: 'images/FFF_Tusj.ttf'
                         text: 'RamsRewards®'  
             AnchorLayout:  
-                size_hint: 1, 0.9
+                size_hint: 1, 0.15
+                id: CreateActivity
+            AnchorLayout:  
+                size_hint: 1, 0.75
                 pos: 0, 10
                 ScrollView:
                     GridLayout:
-                        padding_bottom: 5
+                        padding: 3
                         spacing: 5
                         orientation: "vertical"
                         height: self.minimum_height
@@ -130,7 +141,6 @@ Builder.load_string("""
                         id: Box2
     Screen:
         name: 'StudentInfo'
-        
         AnchorLayout:
             canvas:
                 Color:
@@ -143,17 +153,154 @@ Builder.load_string("""
                 orientation: 'vertical'
                 padding: 10
                 spacing: 5                    
+    Screen:
+        name: 'Settings'
+        
+        BoxLayout:
+            padding:5
+            orientation: 'vertical'
+            AnchorLayout:
+                size_hint: 1, 0.1
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'top' 
+                    canvas:
+                        Color:
+                            rgba: 51/255, 153/255, 51/255, 1
+                        Rectangle:
+                            pos: 0, root.height - root.height/10
+                            size: root.width, root.height/10
+                AnchorLayout:
+                    padding: 15, 0
+                    anchor_x: 'right'
+                    anchor_y: 'top' 
+                    Button:
+                        text: '->'
+                        size_hint: 0.15, 0.09
+                        background_color: 1,1,1,1
+                        on_press: 
+                            root.back_click()
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'top' 
+                    padding: root.width/50, root.height/75
+                    canvas:
+                        Color:
+                            rgba: 1, 1, 1, .6
+                        Rectangle:
+                            pos: root.width/2-root.width/5, root.height-root.height/10
+                            size: root.width/2.5, root.height/10
+                            source: 'images/rams.png'                      
+    Screen:
+        name: 'camera'
+        
+        BoxLayout:
+            padding:5
+            orientation: 'vertical'
+            AnchorLayout:
+                size_hint: 1, 0.1
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'top' 
+                    canvas:
+                        Color:
+                            rgba: 51/255, 153/255, 51/255, 1
+                        Rectangle:
+                            pos: 0, root.height - root.height/10
+                            size: root.width, root.height/10
+                AnchorLayout:
+                    padding: 15, 0
+                    anchor_x: 'left'
+                    anchor_y: 'top' 
+                    Button:
+                        text: '<-'
+                        size_hint: 0.15, 0.09
+                        background_color: 1,1,1,1
+                        on_press: 
+                            root.back_click2()
+    Screen:
+        name: 'activityCreate'
+        
+        BoxLayout:
+            padding:5
+            orientation: 'vertical'
+            AnchorLayout:
+                size_hint: 1, 0.1
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'top' 
+                    canvas:
+                        Color:
+                            rgba: 51/255, 153/255, 51/255, 1
+                        Rectangle:
+                            pos: 0, root.height - root.height/10
+                            size: root.width, root.height/10
+                AnchorLayout:
+                    padding: 15, 0
+                    anchor_x: 'left'
+                    anchor_y: 'top' 
+                    Button:
+                        text: '<-'
+                        size_hint: 0.15, 0.09
+                        background_color: 1,1,1,1
+                        on_press: 
+                            root.back_click2()
+            Label:
+                color: 0,0,0,1
+                text: 'Activity Name'
+            TextInput:
+                id: ActNameInput
+            Label:
+                color: 0,0,0,1
+                text: 'Activity Points'
+            TextInput:
+                id: ActPointInput
+            Button:
+                text: 'Create'
+
+<ScrollableLabel>:
+    Label:
+        size_hint_y: None
+        height: self.texture_size[1]
+        text_size: self.width, None
+        text: root.text
 """)
 
 
 class Screens(ScreenManager):
+    def three_click(self):
+        sm.transition.direction = 'right'
+        sm.current = 'Settings'
     pass
 
+    def back_click(self):
+        sm.transition.direction = 'left'
+        sm.current = 'menu'
+    pass
+
+    def cam_click(self):
+        sm.transition.direction = 'left'
+        sm.current = 'camera'
+    pass
+
+    def back_click2(self):
+        sm.transition.direction = 'right'
+        sm.current = 'menu'
+    pass
+
+    def award_new_activity(self):
+        global currentActivity
+        tempActivity = Activity(sm.actNameInput.text, int(sm.actPointsInput.text))
+        currentActivity = tempActivity
+        
+
+class ScrollableLabel(ScrollView):
+    text = StringProperty('')
 
 class RamsRewardsApp(App):
 
     def build(self):
-
+        global sm
         sm = Screens()
 
         Window.size = (300, 570)
@@ -191,6 +338,7 @@ class RamsRewardsApp(App):
             global lastScreen
             sm.activityName.clear_widgets()
             sm.box2.clear_widgets()
+            sm.transition.direction = 'left'
             sm.current = 'Screen2'
             text = text1
             for i in students:
@@ -214,7 +362,6 @@ class RamsRewardsApp(App):
             sm.activityName.add_widget(label)
             sm.activityName.add_widget(label2)
             sm.activityName.add_widget(add_points_button)
-            print(currentActivity.get_activity())
 
             for i in students:
                 currentStudent = i
@@ -239,13 +386,19 @@ class RamsRewardsApp(App):
 
         def backButtonCallBack(instance):
             sm.activityName.clear_widgets()
+            sm.transition.direction = 'right'
             sm.current = 'menu'
+
+        def newActivityCallBack(instance):
+            sm.transition.direction = 'left'
+            sm.current = 'activityCreate'
 
         def backStudentButtonCallBack(instance):
             global currentActivity
             text = currentActivity.get_activity()
             sm.activityName.clear_widgets()
             refreshCallBack(text)
+            sm.transition.direction = 'right'
             sm.current = 'Screen2'
 
         def on_checkbox_active(checkbox, value):
@@ -257,7 +410,6 @@ class RamsRewardsApp(App):
             if value:
                 select = True
             currentStudent.select(select)
-            print(currentStudent.get_name(), currentStudent.isSelected())
 
         def on_click(instance):
             global currentStudent
@@ -266,6 +418,7 @@ class RamsRewardsApp(App):
                 if i.isSelected():
                     currentStudent = i
                     currentStudent.set_points(i.get_points()+currentActivity.get_points())
+                    currentStudent.log_event(currentActivity.get_activity())
             refreshCallBack(currentActivity.get_activity())
 
 
@@ -283,6 +436,7 @@ class RamsRewardsApp(App):
             idLabel = Label(text="Student ID: " + str(currentStudent.get_id()))
             gradeLabel = Label(text="Grade: " + str(currentStudent.get_grade()))
             pointsLabel = Label(text="Points: " + str(currentStudent.get_points()))
+            activitiesLabel = ScrollableLabel(text="    Activities:\n" + str(currentStudent.get_history()))
             button = Button(text="Back")
             button.bind(on_press=backStudentButtonCallBack)
             sm.studentInformation.add_widget(button)
@@ -290,9 +444,12 @@ class RamsRewardsApp(App):
             sm.studentInformation.add_widget(idLabel)
             sm.studentInformation.add_widget(gradeLabel)
             sm.studentInformation.add_widget(pointsLabel)
-            print(currentActivity.get_activity())
-            print(currentStudent.get_name())
+            sm.studentInformation.add_widget(activitiesLabel)
 
+        newActivityButton = Button()
+        newActivityButton.text= "Custom Activity"
+        newActivityButton.bind(on_press=newActivityCallBack)
+        sm.createActivity.add_widget(newActivityButton)
         for i in activities:
             text = i.get_activity()
             text1 = str(i.get_points())
@@ -308,6 +465,7 @@ class RamsRewardsApp(App):
             button.bind(on_press=callback)
             sm.box.add_widget(button)
             sm.box.add_widget(label)
+
         return sm
 
 
