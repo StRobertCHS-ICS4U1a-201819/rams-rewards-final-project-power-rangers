@@ -1,13 +1,13 @@
-# https://kivy.org/doc/stable/guide/lang.html
 import kivy
 
-from Student import *
+from Studentclasses import *
 
-kivy.require('1.9.0')
+kivy.require('1.10.1')
 
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.button import Button
@@ -16,13 +16,74 @@ from kivy.uix.widget import Widget
 
 # You can create your kv code in the Python file
 pres = Builder.load_string("""
-
 <ScreenManage>:
    profileScreen: ProfileScreen
    homeScreen: HomeScreen
+   eventsScreen: EventsScreen
+   loginScreen: LoginScreen
+   Screen:
+      name: "LoginScreen"
+      id: LoginScreen
+      BoxLayout:
+         id: login_layout
+         orientation: 'vertical'
+         padding: [10,50,10,50]
+         spacing: 50
+         canvas:
+            Color:
+               rgba: 51/255, 153/255, 51/255, 1
+            Rectangle:
+               pos: 0, root.height-root.height/10
+               size: root.width, root.height/10     
+         
+         Label:
+            text: 'Welcome'
+            color: 0,0,0,1
+            font_size: 32
+            
+         Label:
+            text: 'Please enter your credentials'
+            color: 0,0,0,1
+            font_size: 22
+            
+         BoxLayout:
+            orientation: 'vertical'
+            Label:
+               text: 'Login'
+               halign: 'left'
+               font_size: 18
+               color: 0,0,0,1
+               text_size: root.width-20, 20
+
+            TextInput:
+               id: login
+               multiline:False
+               font_size: 15
+
+         BoxLayout:
+            orientation: 'vertical'
+            Label:
+               text: 'Password'
+               halign: 'left'
+               color: 0,0,0,1
+               font_size: 18
+               text_size: root.width-20, 20
+
+            TextInput:
+               id: passw
+               multiline:False
+               password:True
+               font_size: 15
+
+         Button:
+            text: "go"
+            on_release: 
+               app.root.current = 'HomeScreen'
+            size_hint: 0.5, 0.5
 
    Screen: 
       name: "HomeScreen"
+
       id: HomeScreen
       orientation: 'vertical'
       AnchorLayout:
@@ -34,11 +95,18 @@ pres = Builder.load_string("""
                   rgba: 51/255, 153/255, 51/255, 1
                Rectangle:
                   pos: 0, root.height-root.height/10
-                  size: root.width, root.height/10 
+                  size: root.width, root.height/10                  
             AnchorLayout:
                anchor_x: 'left'
                anchor_y: 'top'
-               padding: root.width/50, root.height/75
+               Button:
+                  on_release:
+                     app.root.transition.direction = 'right'
+                     app.root.current = 'LoginScreen'
+                  text: 'Log Out'
+                  color: 1, 1, 1, 1
+                  size_hint: 0.15, 0.075
+                  background_color: 1,0,0,1  
                Label:
                   font_size: root.width/12.5
                   size_hint: 1, 1
@@ -77,9 +145,9 @@ pres = Builder.load_string("""
                   on_release:
                      app.root.transition.direction = 'right'
                      app.root.current = 'HomeScreen'
-                  color: 1, 0, 0, 1
+                  color: 1, 1, 1, 1
                   size_hint: 0.15, 0.075
-                  background_color: 1, 1, 1, 1
+                  background_color: 1,0,0,1  
             AnchorLayout:
                anchor_x: 'right'
                anchor_y: 'top'
@@ -88,9 +156,9 @@ pres = Builder.load_string("""
                   on_release:
                      app.root.transition.direction = 'left'
                      app.root.current = 'EventsScreen'
-                  color: 1, 0, 0, 1
+                  color: 1, 1, 1, 1
                   size_hint: 0.15, 0.075
-                  background_color: 1,1,1,1
+                  background_color: 1,0,0,1  
             BoxLayout:
                orientation: "vertical"
                size: root.size
@@ -102,10 +170,9 @@ pres = Builder.load_string("""
                   on_release:
                      app.root.transition.direction = 'up'
                      app.root.current = 'BarcodeScreen'
-                  color: 1, 0, 0, 1
+                  color: 1, 1, 1, 1
                   size_hint: 1, 0.5
-                  background_color: 1, 1, 1, 1
-
+                  background_color: 1, 0, 0, 1
    Screen:
       name: "EventsScreen"
       id: EventsScreen
@@ -128,9 +195,9 @@ pres = Builder.load_string("""
                      app.root.transition.direction = 'right'
                      app.root.current = 'ProfileScreen'
                   text: 'Back'
-                  color: 1, 0, 0, 1
+                  color: 1, 1, 1, 1
                   size_hint: 0.15, 0.075
-                  background_color: 1, 1, 1, 1
+                  background_color: 1,0,0,1  
    Screen:
       name: "BarcodeScreen"
       id: BarcodeScreen
@@ -153,21 +220,27 @@ pres = Builder.load_string("""
                      app.root.transition.direction = 'down'
                      app.root.current = 'ProfileScreen'
                   text: 'Back'
-                  color: 1, 0, 0, 1
-                  size_hint: 0.5, 0.075
-                  background_color: 1, 1, 1, 1
-
+                  color: 1, 1, 1, 1
+                  size_hint: 1, 0.075
+                  background_color: 1,0,0,1  
 """)
 
 
 class ScreenManage(ScreenManager):
     pass
 
+
+class LoginScreen(Screen):
+    pass
+
+
 class HomeScreen(Screen):
     pass
 
+
 class ProfileScreen(Screen):
     pass
+
 
 class BarcodeScreen(Screen):
     pass
@@ -183,7 +256,7 @@ class Label(Label):
 
 sm = ScreenManage()
 
-student1 = Student(500, 'Bob', 'Smith', 'PSU500', '50081756')
+student1 = Student(1000, 'Bob', 'Smith', 'PSU500', '50081756', 'Ram of the Month')
 
 
 class RamsRewardsApp(App):
@@ -192,6 +265,13 @@ class RamsRewardsApp(App):
         Window.size = (300, 570)
         Window.clearcolor = (200, 200, 200, 1)
 
+        label_events = Label()
+        label_events.text = 'History of Events'
+        label_events.size_hint = 1, 1.6
+        label_events.color = 1, 0, 0, 1
+        label_events.font_name = 'arial'
+        label_events.font_size = 32
+        sm.eventsScreen.add_widget(label_events)
 
         label_app = Label()
         label_app.text = 'Rams Rewards App'
@@ -241,4 +321,3 @@ class RamsRewardsApp(App):
 
 if __name__ == "__main__":
     RamsRewardsApp().run()
-
