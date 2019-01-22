@@ -256,7 +256,7 @@ class Label(Label):
 
 sm = ScreenManage()
 
-student1 = Student(1000, 'Bob', 'Smith', 'PSU500', '50081756', 'Ram of the Month')
+student1 = Student(1500, 'Bob', 'Smith', 'PSU500', '50081756', 'Ram of the Month', 'Talent Show', 'Art Show')
 
 
 class RamsRewardsApp(App):
@@ -272,6 +272,32 @@ class RamsRewardsApp(App):
         label_events.font_name = 'arial'
         label_events.font_size = 32
         sm.eventsScreen.add_widget(label_events)
+
+        label_events = Label()
+        label_events.text = student1.get_event()
+        label_events.text = student1.get_second_event()
+        label_events.text = student1.get_third_event()
+        label_events.size_hint = 1, 1.3
+        label_events.color = 1, 0, 0, 1
+        label_events.font_name = 'arial'
+        label_events.font_size = 25
+        sm.eventsScreen.add_widget(label_events)
+
+        label_events2 = Label()
+        label_events2.text = student1.get_second_event()
+        label_events2.size_hint = 1, 1
+        label_events2.color = 1, 0, 0, 1
+        label_events2.font_name = 'arial'
+        label_events2.font_size = 25
+        sm.eventsScreen.add_widget(label_events2)
+
+        label_events3 = Label()
+        label_events3.text = student1.get_third_event()
+        label_events3.size_hint = 1, 0.7
+        label_events3.color = 1, 0, 0, 1
+        label_events3.font_name = 'arial'
+        label_events3.font_size = 25
+        sm.eventsScreen.add_widget(label_events3)
 
         label_app = Label()
         label_app.text = 'Rams Rewards App'
