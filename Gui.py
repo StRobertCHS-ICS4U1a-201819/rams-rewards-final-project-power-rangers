@@ -309,15 +309,15 @@ class RamsRewardsApp(App):
         ball = Activity("ball", 10)
         soccer = Activity("soccer", 20)
         choir = Activity("choir", 5)
-        defazingYutes = Activity("defazing yutes", 100)
-        gurksingHeadTops = Activity("gurksing headtops", 50)
-        singingOCanada = Activity("singing o canada", 200)
-        ramofthemonth = Activity("ram of the month", 1000)
-        helpingAMandem = Activity("helping a mandem", 70)
-        lowingAManATump = Activity("Lowed a man a tump", 90)
-        bogeyBreak = Activity("took a bogey break", 80)
-        activities = [ball, soccer, choir, defazingYutes, gurksingHeadTops, singingOCanada, ramofthemonth,
-                      helpingAMandem, lowingAManATump, bogeyBreak]
+        lead_prayer = Activity("lead prayer", 100)
+        help_prepare = Activity("help with assembly", 50)
+        singing_o_canada = Activity("singing o canada", 200)
+        ram_of_the_month = Activity("ram of the month", 1000)
+        assisting_others = Activity("helping a student", 70)
+        helpful_student = Activity("giving a student a pencil", 90)
+        character_award = Activity("character award", 80)
+        activities = [ball, soccer, choir, lead_prayer, help_prepare, singing_o_canada, ram_of_the_month,
+                      assisting_others, helpful_student, character_award]
 
         student1 = Student("Timofey", "Hartanovich", 1, 12)
         student2 = Student("Jorge", "Sumi", 2, 12)
